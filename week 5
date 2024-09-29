@@ -1,0 +1,97 @@
+# Exercise 6
+
+#Assignment 1
+
+SELECT max(elevation_ft) FROM airport;
+
+#Assignment 2
+
+SELECT continent, count(*) from country
+GROUP BY continent;
+
+#Assignment 3
+
+SELECT game.screen_name, COUNT(*) from goal_reached
+LEFT JOIN game ON game_id = game.id
+GROUP BY game.screen_name;
+
+
+#Assignment 4
+
+SELECT screen_name FROM game
+WHERE co2_consumed IN (
+    SELECT min(co2_consumed) FROM game
+    );
+
+
+#Assignment 5
+
+SELECT country.name, count(*) FROM airport
+LEFT JOIN country ON airport.iso_country = country.iso_country
+GROUP BY airport.iso_country 
+ORDER BY count(*) desc; 
+
+
+#Assignment 6
+
+SELECT country.name FROM airport
+RIGHT JOIN country ON airport.iso_country = country.iso_country
+GROUP BY airport.iso_country
+HAVING count(airport.iso_country) >= 1000;
+
+#Assignment 7
+
+SELECT airport.name FROM airport
+WHERE airport.elevation_ft IN (
+    SELECT max(elevation_ft) FROM airport
+    );
+
+#Assignment 8
+
+SELECT country.name FROM country
+WHERE country.iso_country IN (
+    SELECT airport.iso_country FROM airport
+    WHERE airport.elevation_ft IN (
+        SELECT max(elevation_ft) FROM airport
+        )
+    );
+
+#Assignment 9
+
+SELECT count(*) FROM goal_reached
+WHERE goal_reached.game_id in (
+    SELECT game.id FROM game
+    WHERE game.screen_name = 'Vesa'
+    );
+
+#Assignment 10
+
+SELECT name FROM airport
+WHERE latitude_deg IN (
+    SELECT min(latitude_deg) FROM airport
+    );
+
+# Exercise 7
+
+#Assignment 1
+
+UPDATE game
+SET co2_consumed = co2_consumed + 500
+WHERE screen_name = 'Vesa';
+
+#Assignment 2
+`Delete from the goal_reached table first`.
+
+#Assignment 3
+
+DELETE FROM goal_reached
+where game_id IN (
+    SELECT id FROM game
+);
+
+#Assignment 4
+
+DELETE FROM game
+WHERE game.id IN (
+    SELECT id FROM game
+);
