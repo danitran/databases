@@ -1,0 +1,124 @@
+# Week 3 Exercise 2
+
+#Assignment 1
+
+SELECT * FROM goal;
+
+
+#Assignment 2
+
+SELECT name, type FROM airport where iso_country = "FI";
+
+
+#Assignment 3
+
+SELECT name FROM airport where iso_country = "FI" order by name asc;
+
+#Assignment 4
+
+SELECT name, type FROM airport where iso_country = "FI" order by type asc, name asc;
+
+
+#Assignment 5
+
+SELECT name FROM country where name like "F%";
+
+
+#Assignment 6
+
+SELECT name FROM country where name like "%F%";
+
+#Assignment 7
+
+SELECT location FROM game where screen_name = "Vesa";
+
+#Assignment 8
+
+SELECT co2_consumed FROM game where screen_name = "Ilkka";
+
+#Assignment 9
+
+SELECT co2_budget FROM game where id = '1';
+
+#Assignment 10
+
+SELECT screen_name, co2_budget, co2_consumed,
+@co2_left := co2_budget - co2_consumed AS co2_left 
+FROM game WHERE screen_name = "Ilkka";
+
+# Week 3 Exercise 3
+
+#Assignment 1
+
+SELECT country.name AS 'country name',
+airport.name AS 'airport name'
+FROM country, airport
+WHERE country.iso_country = airport.iso_country
+AND country.name = 'Iceland';
+
+#Assignment 2
+
+SELECT airport.name AS 'airport name' FROM airport, country
+WHERE type = 'large_airport'
+AND airport.iso_country = country.iso_country
+AND country.name = 'France';
+
+#Assignment 3
+
+SELECT country.name AS 'country name', 
+        airport.name AS 'airport name' FROM country, airport
+WHERE country.iso_country = airport.iso_country
+AND country.continent = 'AN';
+
+#Assignment 4
+
+SELECT elevation_ft FROM game, airport
+WHERE game.screen_name = 'Heini'
+AND airport.ident = game.location;
+
+#Assignment 5
+
+SELECT @elevation_m := airport.elevation_ft * 0.3048 as elevation_m
+FROM game, airport
+WHERE game.screen_name = 'Heini'
+AND airport.ident = game.location;
+
+#Assignment 6
+
+SELECT name FROM airport, game
+WHERE game.screen_name = 'Ilkka'
+AND game.location = airport.ident;
+
+#Assignment 7
+
+SELECT country.name FROM game, airport, country
+WHERE game.screen_name = 'Ilkka'
+AND game.location = airport.ident
+AND airport.iso_country = country.iso_country;
+
+#Assignment 8
+
+SELECT goal.name FROM game, goal, goal_reached
+WHERE game.screen_name = 'Heini'
+AND game.id = goal_reached.game_id
+AND goal_reached.goal_id = goal.id;
+
+#Assignment 9
+
+SELECT airport.name FROM game, goal, goal_reached, airport
+WHERE game.screen_name = 'Ilkka'
+AND game.id = goal_reached.game_id
+AND goal_reached.goal_id = goal.id
+AND goal.name = 'Clouds'
+AND game.location = airport.ident;
+
+#Assignment 10
+
+SELECT country.name FROM game, goal,
+goal_reached, airport, country
+WHERE game.screen_name = "Ilkka"
+AND game.id = goal_reached.game_id
+AND goal_reached.goal_id = goal.id
+AND goal.name = 'Clouds'
+AND game.location = airport.ident
+AND airport.iso_country = country.iso_country; 
